@@ -1,7 +1,6 @@
-from pyRPGText.system.game.gamesystem import gameSystem
+from ..system.game.gamesystem import gameSystem
 
-
-class gameManager:
+class GameManager:
     def __init__(self):
         self.gameSystem = gameSystem()
 

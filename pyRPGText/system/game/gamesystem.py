@@ -1,5 +1,5 @@
-from pyRPGText.system.story.storyblock import storyBlock
-from pyRPGText.system.story.storysystem import storySystem
+from ..story.storysystem import storySystem
+from ..story.storyblock import storyBlock
 
 
 class gameSystem:
