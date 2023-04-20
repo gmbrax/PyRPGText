@@ -33,7 +33,9 @@ class InputSystem:
                 self.reset_all()
     def process_input(self,userinput):
         temp_command, temp_argument = self.process_and_validate_command(userinput)
-        temp_argument = self.process_argument(temp_command, temp_argument)
+        if self.is_valid_command:
+            temp_argument = self.process_argument(temp_command, temp_argument)
+            self.validate_argument(temp_argument)
     def process_and_validate_command(self, userinput):
         temp_command = f""
         for index, char in enumerate(userinput):
@@ -50,7 +52,6 @@ class InputSystem:
         if self.is_valid_command:
             temp_argument_text = userinput.replace(temp_command, "")
             temp_argument_text = temp_argument_text.strip()
-            self.process_argument(temp_command, temp_argument_text)
             return (temp_command,temp_argument_text)
         else:
             print("Invalid Input: Not A valid Command")
@@ -66,7 +67,7 @@ class InputSystem:
 
         if temp_command.get_key_list_from_argument_dict() is not None:
             if check_if_argument_is_not_blank(argumenttext):
-                print("Thats my bingo")
+                return argumenttext
             else:
                 print("Invalid Input: Command Needs an Argument")
 
@@ -74,5 +75,18 @@ class InputSystem:
             if check_if_argument_is_not_blank(argumenttext):
                 print("Invalid Input: Extra Argument Not Needed")
             else:
-                print("Thats my bingo")
+                return None
 
+    def validate_argument(self,processedargument):
+        temp_command = self.command_dict.get(self.inputed_command)
+        argumentlist = temp_command.get_key_list_from_argument_dict()
+        if argumentlist is None:
+            if processedargument is None:
+                self.is_valid_argument = True
+            else:
+                print("Invalid Input: Invalid Argument Value")
+        else:
+            if processedargument in argumentlist:
+                self.is_valid_argument = True
+            else:
+                print("Invalid Input: Invalid Argument Value")
