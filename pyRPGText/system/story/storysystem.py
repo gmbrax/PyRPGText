@@ -1,11 +1,12 @@
 from pyRPGText.system.story.storygraph import StoryGraph
-
+from ..game.gamesystem import Gamesystem
 
 class StorySystem:
     def __init__(self):
         self.current_storyblock = None
         self.storyblock_graph = StoryGraph()
         self.storyblock_dict = {}
+        self.gamesystem = Gamesystem()
 
     def add_story_block(self, storyblock):
         self.storyblock_graph.add_vertex(storyblock)
