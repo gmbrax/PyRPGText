@@ -1,67 +1,78 @@
-from pyRPGText.system.io.inputsystem.command import command
+from pyRPGText.system.io.inputsystem.command import Command
 
 
-class inputSystem:
+class InputSystem:
     def __init__(self):
-        self.inputedCommand = None
-        self.inputedArgument = None
-        self.isValidCommand = False
-        self.isValidArgument = False
-        self.commandDict={}
+        self.inputed_command = None
+        self.inputed_argument = None
+        self.is_valid_command = False
+        self.is_valid_argument = False
+        self.command_dict={}
 
-    def resetAll(self):
-        self.inputedCommand = None
-        self.inputedArgument = None
-        self.isValidCommand = False
-        self.isValidArgument = False
-        self.commandDict = {}
-    def addCommand(self,text,function):
-        inputCommand= command(text,function)
-        inputCommand.argumentDict = None
-        self.commandDict[inputCommand.getText()] = inputCommand
+    def reset_all(self):
+        self.inputed_command = None
+        self.inputed_argument = None
+        self.is_valid_command = False
+        self.is_valid_argument = False
+    def add_command(self, text, function):
+        input_command= Command(text, function)
+        input_command.argument_dict = None
+        self.command_dict[input_command.get_text()] = input_command
 
-    def addArgumentToCommand(self, commandText,argumentName,argumentValue):
-        if commandText in self.commandDict.keys():
-            command = self.commandDict.get(commandText)
-            command.addArgument(argumentName,argumentValue)
-    def getInput(self):
+    def add_argument_to_command(self, commandtext, argumentname, argumentvalue):
+        if commandtext in self.command_dict.keys():
+            command = self.command_dict.get(commandtext)
+            command.add_argument(argumentname, argumentvalue)
+    def get_input(self):
         while True:
-            userInput = input("Command-> ")
-            self.inputedCommand, self.inputedArgument = self.lexUserInput(userInput)
-            print(f"{self.inputedCommand}:{self.inputedArgument}")
-
-
-    def lexUserInput(self, userInput):
-        command = f""
-        argumment = f""
-        for index, char in enumerate(userInput):
-            command = command+char
-            if command in self.commandDict.keys():
+            user_input = input("Command-> ")
+            self.process_input(user_input)
+            if self.is_valid_command and self.is_valid_argument :
                 break
-            elif command not in self.commandDict.keys() and index == len(userInput) - 1:
-                command = None
-                break
-        if command is not None:
-            argumentText = userInput.replace(command, "")
-            argumentText = argumentText.strip()
-            argumentTextNotBlank = bool(argumentText and not argumentText.isspace())
-            commandFromDict = self.commandDict.get(command)
-            if commandFromDict.getKeyListFromArgumentDict() is not None:
-                if argumentTextNotBlank:
-                    argumment = argumentText
-                    print("You arrived at your Destination") #toDo: Adicionar Validação para o argumento nos dois pontos onde da tudo certo
-                else:
-                    argumment = None
-                    print("Invalid Input: Command Needs an Argument")
             else:
-                if argumentTextNotBlank:
-                    print("Invalid Input: Extra Argument Not Needed")
-                    argumment = None
-                else:
-                    argumment = argumentText
-                    print("You arrived at your Destination")
+                self.reset_all()
+    def process_input(self,userinput):
+        temp_command, temp_argument = self.process_and_validate_command(userinput)
+        temp_argument = self.process_argument(temp_command, temp_argument)
+    def process_and_validate_command(self, userinput):
+        temp_command = f""
+        for index, char in enumerate(userinput):
+            temp_command = temp_command + char
+            if temp_command in self.command_dict.keys():
+                self.is_valid_command = True
+                self.inputed_command = temp_command
+                break
+            elif temp_command not in self.command_dict.keys() and index == len(userinput)-1:
+                self.inputed_command = None
+                temp_command=None
+                break
 
+        if self.is_valid_command:
+            temp_argument_text = userinput.replace(temp_command, "")
+            temp_argument_text = temp_argument_text.strip()
+            self.process_argument(temp_command, temp_argument_text)
+            return (temp_command,temp_argument_text)
+        else:
+            print("Invalid Input: Not A valid Command")
+            return (None,None)
 
-        return (command, argumment)
+    def process_argument(self, command, argumenttext):
+        def check_if_argument_is_not_blank(argumenttext):
+            return bool(argumenttext and not argumenttext.isspace())
+        if Command is not None:
+            temp_command = self.command_dict.get(command)
+        else:
+            return
 
+        if temp_command.get_key_list_from_argument_dict() is not None:
+            if check_if_argument_is_not_blank(argumenttext):
+                print("Thats my bingo")
+            else:
+                print("Invalid Input: Command Needs an Argument")
+
+        else:
+            if check_if_argument_is_not_blank(argumenttext):
+                print("Invalid Input: Extra Argument Not Needed")
+            else:
+                print("Thats my bingo")
 

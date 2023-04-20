@@ -1,18 +1,21 @@
-from pyRPGText.system.io.inputsystem.argument import argument
+from pyRPGText.system.io.inputsystem.argument import Argument
 
 
-class command:
+class Command:
     def __init__(self, text,function):
-        self.argumentDict= {}
+        self.argument_dict = {}
         self.text = text
         self.function = function
 
-    def getText(self):
+    def get_text(self):
         return self.text
-    def getKeyListFromArgumentDict(self):
-        return self.argumentDict.keys()
-    def addArgument(self,argumentName, argumentValue):
-        inputArgument = argument(argumentName,argumentValue)
-        if self.argumentDict is None:
-            self.argumentDict = {}
-        self.argumentDict[inputArgument.getName()] = inputArgument
+    def get_key_list_from_argument_dict(self):
+        if self.argument_dict is None:
+            return None
+        else:
+            return self.argument_dict.keys()
+    def add_argument(self, argumentname, argumentvalue):
+        input_argument = Argument(argumentname, argumentvalue)
+        if self.argument_dict is None:
+            self.argument_dict = {}
+        self.argument_dict[input_argument.get_name()] = input_argument

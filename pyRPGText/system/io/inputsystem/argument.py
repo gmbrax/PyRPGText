@@ -1,10 +1,10 @@
 
-class argument:
+class Argument:
     def __init__(self, name, value):
         self.name = name
         self.value = value
 
-    def getName(self):
+    def get_name(self):
         return self.name
-    def getValue(self):
+    def get_value(self):
         return self.value
