@@ -1,18 +1,18 @@
-class storyGraph:
+class StoryGraph:
     def __init__(self):
         self.graph = {}
 
-    def addVertex(self, storyBlock):
-        self.graph[storyBlock.getName()] = None
+    def add_vertex(self, storyblock):
+        self.graph[storyblock.get_name()] = None
 
-    def addEdge(self, storyBlock, storyBlockBranch):
-        if self.graph[storyBlock.getName()] is None:
-            self.graph[storyBlock.getName()] = [storyBlockBranch.getName()]
+    def add_edge(self, storyblock, storyblock_branch):
+        if self.graph[storyblock.get_name()] is None:
+            self.graph[storyblock.get_name()] = [storyblock_branch.get_name()]
         else:
-            self.graph[storyBlock.getName()].append(storyBlockBranch.getName())
+            self.graph[storyblock.get_name()].append(storyblock_branch.get_name())
 
-    def getKeys(self):
+    def get_keys(self):
         return self.graph.keys()
 
-    def getValueFromKey(self, key):
+    def get_value_from_key(self, key):
         return self.graph.get(key)

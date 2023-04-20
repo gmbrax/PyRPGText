@@ -1,51 +1,51 @@
-from pyRPGText.system.story.storygraph import storyGraph
+from pyRPGText.system.story.storygraph import StoryGraph
 
 
-class storySystem:
+class StorySystem:
     def __init__(self):
-        self.currentStoryBlock = None
-        self.storyBlockGraph = storyGraph()
-        self.storyBlockDict = {}
-    def addStoryBlock(self, storyBlock):
-        self.storyBlockGraph.addVertex(storyBlock)
-        self.storyBlockDict[storyBlock.getName()] = storyBlock
+        self.current_storyblock = None
+        self.storyblock_graph = StoryGraph()
+        self.storyblock_dict = {}
 
-    def addStoryBlockBranch(self, mainStoryBlock, branchStoryBlock):
-        self.storyBlockGraph.addEdge(mainStoryBlock, branchStoryBlock)
+    def add_story_block(self, storyblock):
+        self.storyblock_graph.add_vertex(storyblock)
+        self.storyblock_dict[storyblock.get_name()] = storyblock
 
-    def setInitialStoryBlock(self, storyBlock):
-        self.currentStoryBlock = storyBlock
-        self.currentStoryBlock.story = self
+    def add_story_block_branch(self, main_storyblock, branch_storyblock):
+        self.storyblock_graph.add_edge(main_storyblock, branch_storyblock)
 
-    def setCurrentStoryBlock(self, storyBlockName):
-        if storyBlockName is None:
-            self.currentStoryBlock = None
+    def set_initial_story_block(self, storyblock):
+        self.current_storyblock = storyblock
+        self.current_storyblock.story = self
+
+    def set_current_story_block(self, storyblock_name):
+        if storyblock_name is None:
+            self.current_storyblock = None
         else:
-            self.currentStoryBlock = self.storyBlockDict.get(storyBlockName)
-            self.currentStoryBlock.story = self
+            self.current_storyblock = self.storyblock_dict.get(storyblock_name)
+            self.current_storyblock.story = self
 
-    def getGraphKeys(self):
-      return self.storyBlockGraph.getKeys()
+    def get_graph_keys(self):
+        return self.storyblock_graph.get_keys()
 
-    def getGraphStoryBlockValues(self, storyBlockName):
-        return self.storyBlockGraph.getValueFromKey(storyBlockName)
+    def get_graph_story_block_values(self, storyblock_name):
+        return self.storyblock_graph.get_value_from_key(storyblock_name)
 
     def run(self):
-        while self.currentStoryBlock is not None:
-            self.currentStoryBlock.run()
-        return
+        while self.current_storyblock is not None:
+            self.current_storyblock.run()
 
-    def checkStoryBlockBranchIsNone(self, storyblockname):
-        if self.getGraphStoryBlockValues(storyblockname) is None:
+    def check_story_block_branch_is_none(self, storyblockname):
+        if self.get_graph_story_block_values(storyblockname) is None:
             return True
         else:
             return False
 
-    def checkStoryBlockHasMultipleBranches(self, storyblockname):
-        if self.getGraphStoryBlockValues(storyblockname) is not None and len(
-        self.getGraphStoryBlockValues(storyblockname)) > 1:
+    def check_story_block_has_multiple_branches(self, storyblockname):
+        if self.get_graph_story_block_values(storyblockname) is not None and len(
+                self.get_graph_story_block_values(storyblockname)) > 1:
             if isinstance(
-            self.getGraphStoryBlockValues(storyblockname), list):
+                    self.get_graph_story_block_values(storyblockname), list):
                 return True
             else:
                 return False
