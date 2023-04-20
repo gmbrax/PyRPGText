@@ -1,4 +1,4 @@
-from pyRPGText.system.io.inputsystem.argument import Argument
+from .argument import Argument
 
 
 class Command:

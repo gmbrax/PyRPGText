@@ -1,4 +1,4 @@
-from pyRPGText.system.io.inputsystem.command import Command
+from .command import Command
 
 
 class InputSystem:
