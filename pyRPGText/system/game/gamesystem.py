@@ -1,25 +1,30 @@
-from ..story.storysystem import storySystem
 from ..story.storyblock import storyBlock
+from ..story.storysystem import storySystem
 
 
-class gameSystem:
+# from ..io.iosystem import IOSystem ToDo: Integrate the IOSystem to the Game System
+
+class Gamesystem:
     def __init__(self):
-        self.storySystem = storySystem()
-    
-    def addStoryBlock(self,name,text,isInitial=False):
-        block = storyBlock(name,text)
-        self.storySystem.addStoryBlock(block)
-        if isInitial:
-            self.storySystem.setInitialStoryBlock(block)
-    def addStoryBlockBranch(self,mainBlockName,branchBlockName):
-        if mainBlockName in self.storySystem.storyBlockDict.keys()\
-                and branchBlockName in self.storySystem.storyBlockDict.keys():
-            mainBlock = self.storySystem.storyBlockDict.get(mainBlockName)
-            branchBlock = self.storySystem.storyBlockDict.get(branchBlockName)
+        self.storysystem = storySystem()
+        # self.iosystem = IOSystem() # It needs to be integrated befored added here
+
+    def add_story_block(self, name, text, is_initial=False):
+        block = storyBlock(name, text)
+        self.storysystem.addStoryBlock(block)
+        if is_initial:
+            self.storysystem.setInitialStoryBlock(block)
+
+    def add_story_block_branch(self, main_block_name, branch_block_name):
+
+        if main_block_name in self.storysystem.storyBlockDict.keys() \
+                and branch_block_name in self.storysystem.storyBlockDict.keys():
+            main_block = self.storysystem.storyBlockDict.get(main_block_name)
+            branch_block = self.storysystem.storyBlockDict.get(branch_block_name)
         else:
             exit(2)
 
-        self.storySystem.addStoryBlockBranch(mainBlock,branchBlock)
+        self.storysystem.addStoryBlockBranch(main_block, branch_block)
 
     def run(self):
-        self.storySystem.run()
+        self.storysystem.run()

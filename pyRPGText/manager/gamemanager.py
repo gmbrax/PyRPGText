@@ -1,14 +1,15 @@
-from ..system.game.gamesystem import gameSystem
+from ..system.game.gamesystem import Gamesystem
+
 
 class GameManager:
     def __init__(self):
-        self.gameSystem = gameSystem()
+        self.gamesystem = Gamesystem()
 
-    def addStoryBlock(self,name,text,isInitial=False):
-        self.gameSystem.addStoryBlock(name,text,isInitial)
+    def add_story_block(self, name, text, is_initial=False):
+        self.gamesystem.add_story_block(name, text, is_initial)
 
-    def addStoryBlockBranch(self,mainBlockName,branchBlockName):
-        self.gameSystem.addStoryBlockBranch(mainBlockName,branchBlockName)
+    def add_story_block_branch(self, main_block_name, branch_block_name):
+        self.gamesystem.add_story_block_branch(main_block_name, branch_block_name)
 
     def run(self):
-        self.gameSystem.run()
+        self.gamesystem.run()
